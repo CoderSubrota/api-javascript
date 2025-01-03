@@ -1,0 +1,48 @@
+.body{background-color: white;  font-family: "Parkinsans", serif;}
+
+.item_not_found_msg{
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 10%;
+    color: red;
+    text-transform: uppercase;
+}
+.foods_card:hover{
+    transform: scale(0.9);
+    transition:transform 1s ;
+}
+.card-img-top{
+    height: 220px;
+    width: 100%;
+    padding-top: 0px;
+}
+.food_details_image{
+    padding-top: 0%;
+    height: 420px; 
+}
+.card{
+    box-shadow:  0 5px 3px 7px #00000097;
+}
+@media (max-width:1200px) {
+    
+}
+
+
+@media (max-width:1000px) {
+    
+}
+
+
+@media (max-width:800px) {
+    .foods{
+        margin-left: 140px;
+    }
+}
+
+
+@media (max-width:600px) {
+    .foods{
+        margin-left: 87px;
+    }
+}
