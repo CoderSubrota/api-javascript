@@ -1,5 +1,43 @@
 let set_foods = document.querySelector(".get_food");
 let food_details = document.querySelector(".food_details");
+//display cards
+function displayCards(data){
+  data?.meals?.map((item) => {
+    (set_foods.innerHTML += `
+      <div class="col">
+      <div class="card mx-2 my-3 foods_card" style="width: 18rem;">
+      <img src="${
+        item?.strMealThumb
+      }" class="card-img-top" alt="${item?.strMeal}">
+      <div class="card-body">
+      <p class="card-title"><span class='text-info fs-6'> Item Name:  </span> ${
+        item?.strMeal.slice(0, 8) + "..."
+      }</p>
+      <p class="card-text"> <span class='text-info'> Item description:  </span> ${
+        item?.strInstructions.slice(0, 56) + "..."
+      }</p>
+       <span class='text-info'> Item video </span> <a href="${
+         item?.strYoutube
+       }" target="_blank" rel="noopener noreferrer">See video to make it</a>
+       <a href="#details">
+       <button onclick="get_food(${
+        item?.idMeal
+      })" class="btn btn-primary my-3"> Show Detail <i class="fa-solid fa-arrow-right px-2"></i> </button>
+      </a>
+       </div>
+      </div>
+      </div>
+      `)
+  })
+}
+//display all foods
+async function displayAllFoods() {
+  const api = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=f");
+  const data = await api.json() ;
+  displayCards(data) ;
+}
+displayAllFoods();
+
 //display foods 
 function get_item_name() {
   let getSearchValue = document.querySelector(".itemName").value;
@@ -9,41 +47,12 @@ function get_item_name() {
     )
       .then((res) => res.json())
       .then((data) => {
-        let foods = data?.meals;
-        console.log(foods);
-        if (foods === null) {
+        if (data?.meals === null) {
           set_foods.innerHTML =
             "<p class='item_not_found_msg'> Item is not available </p>";
         } else {
           set_foods.innerHTML = "";
-          foods.map(
-            (item) =>
-              (set_foods.innerHTML += `
-                      <div class="col">
-                      <div class="card mx-2 my-3 foods_card" style="width: 18rem;">
-                      <img src="${
-                        item?.strMealThumb
-                      }" class="card-img-top" alt="${item?.strMeal}">
-                      <div class="card-body">
-                      <p class="card-title"><span class='text-info fs-6'> Item Name:  </span> ${
-                        item?.strMeal.slice(0, 8) + "..."
-                      }</p>
-                      <p class="card-text"> <span class='text-info'> Item description:  </span> ${
-                        item?.strInstructions.slice(0, 56) + "..."
-                      }</p>
-                       <span class='text-info'> Item video </span> <a href="${
-                         item?.strYoutube
-                       }" target="_blank" rel="noopener noreferrer">See video to make it</a>
-                       <a href="#details">
-                       <button onclick="get_food(${
-                        item?.idMeal
-                      })" class="btn btn-primary my-3"> Show Detail <i class="fa-solid fa-arrow-right px-2"></i> </button>
-                      </a>
-                       </div>
-                      </div>
-                      </div>
-                      `)
-          );
+          displayCards(data);
         }
       })
       .catch((error) => console.log(error));
